@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>HW2</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="root-container">
+        <div class="header">
+            <button id="reverse">
+                REVERSE
+            </button>
+            <button id="remove-symbols-numbers">
+                REMOVE SYMBOLS & NUMBERS
+            </button>
+            <button id="sort-alphabetically">
+                SORT ALPHABETICALLLY
+            </button>
+            <button id='toggle-color'>
+                TOGGLE COLOR
+            </button>
+            <button id='random-color'>
+                RANDOM COLOR
+            </button>
+            <button id='convert-inline'>
+                CONVERT TO INLINE
+            </button>
+        </div>
+        <div class="main">
+            <div class="startups-container">
+
+            </div>
+
+        </div>
+        <div class="footer">
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<style>
+    .root-container {
+        position: relative;
+    }
+
+    .root-container .header {
+        position: relative;
+    }
+
+    .root-container .main {
+        position: relative;
+    }
+
+    .root-container .footer {
+        position: relative;
+    }
+
+    .startups-container {
+        background-color: gray;
+        overflow: hidden;
+    }
+
+    .red {
+        background-color: red;
+    }
+
+    .blue {
+        background-color: blue;
+    }
+
+    .gold {
+        background-color: gold;
+    }
+
+    div.inline {
+        float: left;
+        padding: .25em;
+    }
+</style>
+
+<script>
+    var colors = ['red', 'blue', 'gold'];
+    var chicagoStartupsHTML = [];
+    var chicagoStartups = [
+        '  Interior   Define  ',
+        'Classkick',
+        'teaBOT  .$',
+        'Pritzker Group Venture Capital',
+        'Teln!yx !!',
+        'ShipBob ~~$$$',
+        'Hologram',
+        'Tovala    ',
+        '    MANOR',
+        'ShuttleCloud 999987',
+        'gtrot @@@@@',
+        'DealsGoRound ****',
+        ' Groovebug',
+        'Stage$$$Bloc',
+        'Shiftgig',
+        'ParkWhiz'
+    ];
+
+    document.addEventListener("DOMContentLoaded", function(event) {
+        chicagoStartups.map( function (startupName) {
+            chicagoStartupsHTML.push('<div>' + startupName + '</div>');
+        });
+        document.getElementsByClassName("startups-container")[0].innerHTML = chicagoStartupsHTML.join("");
+    });
+
+    //HOMEWORK 2 PROBLEMS START
+    // 1.CREATE A FUNCTION THAT REVERSES THE LIST OF STARTUPS ON CLICK OF THE REVERSE BUTTON
+    document.getElementById("reverse").addEventListener("click", function (event) {
+        console.log("clicked reverse")
+        var container = document.getElementsByClassName("startups-container")[0];
+        var elements = Array.from(container.getElementsByTagName('div'));
+        var reversed = Array.from(elements).reverse()
+        for (var i = 0; i < elements.length; ++i) {
+          container.removeChild(elements[i])
+        }
+        for (var i = 0; i < elements.length; ++i) {
+          container.appendChild(reversed[i])
+        }
+    });
+    // 2.CREATE A FUNCTION THAT REMOVES ALL SYMBOLS AND NUMBERS FROM COMPANY NAMES ON CLICK OF REMOVE SYMBOLS & NUMBERS BUTTON
+    //   Stage$$$Bloc => StageBloc
+    document.getElementById("remove-symbols-numbers").addEventListener("click", function (event) {
+        //replace(/[^a-z\s]/gi, '')
+        divCleanArr = Array.from(document.getElementsByClassName("startups-container")[0].getElementsByTagName("div"))
+        .map(function (index) {
+            index.innerHTML = index.innerHTML.replace(/[^a-z\s]/gi, '');
+        })
+    });
+    // 3.CREATE A FUNCTION THAT SORTS STARTUPS IN ALPHABETICAL ORDER ON CLICK OF THE SORT BUTTON
+    document.getElementById("sort-alphabetically").addEventListener("click", function (event) {
+        var container = document.getElementsByClassName("startups-container")[0]
+        var elements = Array.from(container.getElementsByTagName('div'));
+        var sorted = Array.from(elements)
+        .sort(function (a, b) {
+            return (b.innerHTML.trim().toUpperCase() < a.innerHTML.trim().toUpperCase() ? 1 : -1);
+        })
+        for (var i = 0; i < elements.length; ++i) {
+          container.removeChild(elements[i])
+        }
+        for (var i = 0; i < elements.length; ++i) {
+          container.appendChild(sorted[i])
+        }
+    });
+    // 4.CREATE A FUNCTION THAT TOGGLES THE BACKGROUND COLOR UPON CLICK OF THE TOGGLE COLOR BUTTON
+    document.getElementById("toggle-color").addEventListener("click", function (event) {
+        var container = document.getElementsByClassName("startups-container")[0]
+        if (container.style.backgroundColor == "white") {
+            container.style.backgroundColor = ""
+        } else {
+            container.style.backgroundColor = "white"
+        }
+    });
+    // 5.CREATE A FUNCTION THAT RANDOMLY SELECTS A COLOR CLASS AND APPLIES IT TO EACH COMPANY NAME WHEN THE COLOR BUTTON IS CLICKED
+    document.getElementById("random-color").addEventListener("click", function (event) {
+        var container = document.getElementsByClassName("startups-container")[0]
+        colors.map(function (color) {
+            console.log(color);
+            container.classList.remove(color);
+        });
+        if (container.style.backgroundColor == "white") {
+            container.style.backgroundColor = ""
+        }
+        container.classList.add(colors[Math.floor(Math.random() * 3)]);
+    });
+    // 6.CREATE A FUNCTION THAT DISPLAYS STARTS AS INLINE ELEMENTS ON CLICK OF CONVERT TO INLINE BUTTON
+    //#convert-inline
+    document.getElementById("convert-inline").addEventListener("click", function (event) {
+        console.log('convert called');
+        Array.from(document.getElementsByClassName("startups-container")[0].getElementsByTagName("div"))
+        .map(function (item) {
+            item.classList.toggle("inline");
+        });
+    });
+    //HOMEWORK 2 PROBLEMS END
+
+</script>
